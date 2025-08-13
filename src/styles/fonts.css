@@ -1,0 +1,116 @@
+/* 
+ * Unified Font System for MediAI Pharmacy Landing Page
+ * This file defines the consistent font usage across all components
+ */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=Kalam:wght@400;700&display=swap');
+
+/* Copernicus Font Face Declaration */
+@font-face {
+  font-family: 'Copernicus Book Regular';
+  src: local('Copernicus Book Regular'), local('Copernicus-Book-Regular');
+  font-display: swap;
+}
+
+/* Font Utility Classes */
+
+/* Bebas Neue - For large headings and section titles */
+.font-bebas {
+  font-family: 'Bebas Neue', cursive;
+}
+
+/* Playfair Display - For styled headings and important text */
+.font-playfair {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Inter - For body text, descriptions, and UI elements */
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Kalam - For decorative elements and highlights */
+.font-kalam {
+  font-family: 'Kalam', cursive;
+}
+
+/* Copernicus - For special sections and branded text */
+.font-copernicus {
+  font-family: 'Copernicus Book Regular', 'Copernicus Book Regular Placeholder', sans-serif;
+}
+
+/* Font Weight Utilities */
+.font-light { font-weight: 300; }
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.font-extrabold { font-weight: 800; }
+.font-black { font-weight: 900; }
+
+/* 
+ * Typography Scale
+ * Consistent sizing across all components
+ */
+
+/* Large Headings - Use with font-bebas or font-playfair */
+.text-hero {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+
+.text-section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.2;
+}
+
+/* Content Headings - Use with font-playfair */
+.text-card-title {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  line-height: 1.3;
+}
+
+/* Body Text - Use with font-inter */
+.text-body {
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  line-height: 1.6;
+}
+
+.text-body-large {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.7;
+}
+
+/* Small Text - Use with font-inter */
+.text-caption {
+  font-size: clamp(0.75rem, 1.25vw, 0.875rem);
+  line-height: 1.5;
+}
+
+/* Button Text - Use with font-inter */
+.text-button {
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+/* Decorative Text - Use with font-kalam */
+.text-decorative {
+  font-size: clamp(0.875rem, 1.75vw, 1.125rem);
+  font-weight: 700;
+}
+
+/*
+ * Usage Guidelines:
+ * 
+ * 1. Large Section Headers: font-bebas + text-section-title
+ * 2. Hero Headlines: font-playfair + text-hero + font-semibold
+ * 3. Card Titles: font-playfair + text-card-title + font-bold
+ * 4. Body Paragraphs: font-inter + text-body
+ * 5. Descriptions: font-inter + text-body-large
+ * 6. Buttons: font-inter + text-button
+ * 7. Decorative Elements: font-kalam + text-decorative
+ * 8. Special Sections: font-copernicus + appropriate text size
+ * 9. Captions/Small Text: font-inter + text-caption
+ */

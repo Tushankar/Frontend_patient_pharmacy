@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import unified font system */
+@import './styles/fonts.css';
+
+/* Custom scrollbar hiding */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ensure high z-index elements appear above everything */
+.z-highest {
+  z-index: 999999 !important;
+  position: relative;
+}
+
+/* Fixed positioning helpers */
+.fixed-highest {
+  position: fixed !important;
+  z-index: 999999 !important;
+}
