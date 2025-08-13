@@ -436,7 +436,7 @@ const Register = () => {
 
       // Make the API request
       const response = await fetch(
-        "http://localhost:1111/api/v1/auth/register",
+        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/register",
         {
           method: "POST",
           body: formDataToSend,
@@ -522,7 +522,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:1111/api/v1/auth/verify-email",
+        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/verify-email",
         {
           method: "POST",
           headers: {
@@ -557,7 +557,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:1111/api/v1/auth/resend-otp",
+        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/resend-otp",
         {
           method: "POST",
           headers: {
@@ -614,18 +614,16 @@ const Register = () => {
                       fontFamily: "Inter, sans-serif",
                     }}
                   >
-                    {isCompleted ? (
-                      <Check className="w-6 h-6" />
-                    ) : (
-                      num
-                    )}
+                    {isCompleted ? <Check className="w-6 h-6" /> : num}
                   </div>
-                  
+
                   {stepLabels[index] && (
                     <span
                       className="text-sm mt-2 font-medium transition-colors duration-300"
                       style={{
-                        color: isActive ? "#DBF5F0" : "rgba(219, 245, 240, 0.6)",
+                        color: isActive
+                          ? "#DBF5F0"
+                          : "rgba(219, 245, 240, 0.6)",
                         fontFamily: "Inter, sans-serif",
                       }}
                     >
@@ -638,7 +636,8 @@ const Register = () => {
                     className="h-1 transition-all duration-300 rounded-full"
                     style={{
                       width: "100px",
-                      backgroundColor: step > num ? "#FDE047" : "rgba(219, 245, 240, 0.2)",
+                      backgroundColor:
+                        step > num ? "#FDE047" : "rgba(219, 245, 240, 0.2)",
                       margin: "0 16px",
                     }}
                   />
@@ -677,10 +676,11 @@ const Register = () => {
       <div className="flex justify-center gap-8">
         {roles.map((role) => {
           const Icon = role.icon;
-          const backgroundImage = role.id === 'patient' 
-            ? 'https://i.pinimg.com/1200x/34/1f/61/341f612abfc037b11218981568bbf09a.jpg'
-            : 'https://i.pinimg.com/736x/6d/78/1e/6d781eda1f6197bc189ba390348de60e.jpg';
-          
+          const backgroundImage =
+            role.id === "patient"
+              ? "https://i.pinimg.com/1200x/34/1f/61/341f612abfc037b11218981568bbf09a.jpg"
+              : "https://i.pinimg.com/736x/6d/78/1e/6d781eda1f6197bc189ba390348de60e.jpg";
+
           return (
             <button
               key={role.id}
@@ -688,32 +688,33 @@ const Register = () => {
               className="relative w-96 h-[450px] rounded-3xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl group"
               style={{
                 backgroundImage: `url(${backgroundImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)",
               }}
             >
               {/* Gradient Overlay */}
-              <div 
+              <div
                 className="absolute inset-0"
                 style={{
-                  background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.8) 100%)'
+                  background:
+                    "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.8) 100%)",
                 }}
               />
-              
+
               {/* Content */}
               <div className="relative h-full flex flex-col justify-end p-6">
                 <div className="mb-4 flex justify-center">
                   <div
                     className="w-16 h-16 rounded-full flex items-center justify-center backdrop-blur-sm"
-                    style={{ 
+                    style={{
                       backgroundColor: "rgba(255, 255, 255, 0.2)",
-                      border: "2px solid rgba(255, 255, 255, 0.3)"
+                      border: "2px solid rgba(255, 255, 255, 0.3)",
                     }}
                   >
-                    {role.id === 'pharmacy' ? (
-                      <img 
-                        src="https://img.icons8.com/ios/50/pharmacy-shop.png" 
+                    {role.id === "pharmacy" ? (
+                      <img
+                        src="https://img.icons8.com/ios/50/pharmacy-shop.png"
                         alt="Pharmacy"
                         className="w-8 h-8 filter invert"
                       />
@@ -722,20 +723,20 @@ const Register = () => {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="text-center">
                   <h3
                     className="text-2xl font-bold text-white"
                     style={{
                       fontFamily: "Playfair Display, serif",
-                      textShadow: "0 2px 4px rgba(0,0,0,0.5)"
+                      textShadow: "0 2px 4px rgba(0,0,0,0.5)",
                     }}
                   >
                     {role.name}
                   </h3>
                 </div>
               </div>
-              
+
               {/* Hover Effect Overlay */}
               <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
             </button>
@@ -781,8 +782,6 @@ const Register = () => {
       </div>
     </div>
   );
-
-
 
   const renderRegistrationForm = () => (
     <div className="space-y-6">
@@ -1007,7 +1006,9 @@ const Register = () => {
                       e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
                     }}
                     onBlur={(e) => {
-                      e.target.style.borderColor = getFieldErrorMessage("firstName")
+                      e.target.style.borderColor = getFieldErrorMessage(
+                        "firstName"
+                      )
                         ? "#EF4444"
                         : "rgba(219, 245, 240, 0.4)";
                       e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
@@ -1058,7 +1059,9 @@ const Register = () => {
                       e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
                     }}
                     onBlur={(e) => {
-                      e.target.style.borderColor = getFieldErrorMessage("lastName")
+                      e.target.style.borderColor = getFieldErrorMessage(
+                        "lastName"
+                      )
                         ? "#EF4444"
                         : "rgba(219, 245, 240, 0.4)";
                       e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
@@ -1164,7 +1167,9 @@ const Register = () => {
                       e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
                     }}
                     onBlur={(e) => {
-                      e.target.style.borderColor = getFieldErrorMessage("dateOfBirth")
+                      e.target.style.borderColor = getFieldErrorMessage(
+                        "dateOfBirth"
+                      )
                         ? "#EF4444"
                         : "rgba(219, 245, 240, 0.4)";
                       e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
@@ -1221,25 +1226,37 @@ const Register = () => {
               >
                 <option
                   value=""
-                  style={{ backgroundColor: "rgba(17, 94, 89, 0.9)", color: "rgba(219, 245, 240, 0.8)" }}
+                  style={{
+                    backgroundColor: "rgba(17, 94, 89, 0.9)",
+                    color: "rgba(219, 245, 240, 0.8)",
+                  }}
                 >
                   Select gender
                 </option>
                 <option
                   value="male"
-                  style={{ backgroundColor: "rgba(17, 94, 89, 0.9)", color: "#DBF5F0" }}
+                  style={{
+                    backgroundColor: "rgba(17, 94, 89, 0.9)",
+                    color: "#DBF5F0",
+                  }}
                 >
                   Male
                 </option>
                 <option
                   value="female"
-                  style={{ backgroundColor: "rgba(17, 94, 89, 0.9)", color: "#DBF5F0" }}
+                  style={{
+                    backgroundColor: "rgba(17, 94, 89, 0.9)",
+                    color: "#DBF5F0",
+                  }}
                 >
                   Female
                 </option>
                 <option
                   value="other"
-                  style={{ backgroundColor: "rgba(17, 94, 89, 0.9)", color: "#DBF5F0" }}
+                  style={{
+                    backgroundColor: "rgba(17, 94, 89, 0.9)",
+                    color: "#DBF5F0",
+                  }}
                 >
                   Other
                 </option>
@@ -1292,13 +1309,17 @@ const Register = () => {
                       }}
                       onFocus={(e) => {
                         e.target.style.borderColor = "#FDE047";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.8)";
                       }}
                       onBlur={(e) => {
-                        e.target.style.borderColor = getFieldErrorMessage("address.street")
+                        e.target.style.borderColor = getFieldErrorMessage(
+                          "address.street"
+                        )
                           ? "#EF4444"
                           : "rgba(219, 245, 240, 0.4)";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.6)";
                       }}
                       placeholder="Street address"
                       value={formData.patientAddress.street}
@@ -1347,7 +1368,9 @@ const Register = () => {
                       e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
                     }}
                     onBlur={(e) => {
-                      e.target.style.borderColor = getFieldErrorMessage("address.city")
+                      e.target.style.borderColor = getFieldErrorMessage(
+                        "address.city"
+                      )
                         ? "#EF4444"
                         : "rgba(219, 245, 240, 0.4)";
                       e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
@@ -1536,12 +1559,14 @@ const Register = () => {
                         e.target.style.borderColor = "#FDE047";
                         e.target.style.boxShadow =
                           "0 0 0 3px rgba(253, 224, 71, 0.1)";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.8)";
                       }}
                       onBlur={(e) => {
                         e.target.style.borderColor = "rgba(219, 245, 240, 0.4)";
                         e.target.style.boxShadow = "none";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.6)";
                       }}
                       placeholder="Enter your pharmacy name"
                       value={formData.pharmacyName}
@@ -1585,12 +1610,14 @@ const Register = () => {
                         e.target.style.borderColor = "#FDE047";
                         e.target.style.boxShadow =
                           "0 0 0 3px rgba(253, 224, 71, 0.1)";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.8)";
                       }}
                       onBlur={(e) => {
                         e.target.style.borderColor = "rgba(219, 245, 240, 0.4)";
                         e.target.style.boxShadow = "none";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.6)";
                       }}
                       placeholder="Enter license number"
                       value={formData.licenseNumber}
@@ -1657,12 +1684,14 @@ const Register = () => {
                         e.target.style.borderColor = "#FDE047";
                         e.target.style.boxShadow =
                           "0 0 0 3px rgba(253, 224, 71, 0.1)";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.8)";
                       }}
                       onBlur={(e) => {
                         e.target.style.borderColor = "rgba(219, 245, 240, 0.4)";
                         e.target.style.boxShadow = "none";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.6)";
                       }}
                       placeholder="Enter pharmacist name"
                       value={formData.pharmacistName}
@@ -1707,12 +1736,14 @@ const Register = () => {
                         e.target.style.borderColor = "#FDE047";
                         e.target.style.boxShadow =
                           "0 0 0 3px rgba(253, 224, 71, 0.1)";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.8)";
                       }}
                       onBlur={(e) => {
                         e.target.style.borderColor = "rgba(219, 245, 240, 0.4)";
                         e.target.style.boxShadow = "none";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.6)";
                       }}
                       placeholder="Enter 10-digit phone number"
                       value={formData.phone}
@@ -1776,12 +1807,14 @@ const Register = () => {
                         e.target.style.borderColor = "#FDE047";
                         e.target.style.boxShadow =
                           "0 0 0 3px rgba(253, 224, 71, 0.1)";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.8)";
                       }}
                       onBlur={(e) => {
                         e.target.style.borderColor = "rgba(219, 245, 240, 0.4)";
                         e.target.style.boxShadow = "none";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.6)";
                       }}
                       placeholder="Enter complete street address"
                       value={formData.address.street}
@@ -1824,12 +1857,14 @@ const Register = () => {
                         e.target.style.borderColor = "#FDE047";
                         e.target.style.boxShadow =
                           "0 0 0 3px rgba(253, 224, 71, 0.1)";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.8)";
                       }}
                       onBlur={(e) => {
                         e.target.style.borderColor = "rgba(219, 245, 240, 0.4)";
                         e.target.style.boxShadow = "none";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.6)";
                       }}
                       placeholder="Enter city"
                       value={formData.address.city}
@@ -1870,12 +1905,14 @@ const Register = () => {
                         e.target.style.borderColor = "#FDE047";
                         e.target.style.boxShadow =
                           "0 0 0 3px rgba(253, 224, 71, 0.1)";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.8)";
                       }}
                       onBlur={(e) => {
                         e.target.style.borderColor = "rgba(219, 245, 240, 0.4)";
                         e.target.style.boxShadow = "none";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.6)";
                       }}
                       placeholder="Enter state"
                       value={formData.address.state}
@@ -1916,12 +1953,14 @@ const Register = () => {
                         e.target.style.borderColor = "#FDE047";
                         e.target.style.boxShadow =
                           "0 0 0 3px rgba(253, 224, 71, 0.1)";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.8)";
                       }}
                       onBlur={(e) => {
                         e.target.style.borderColor = "rgba(219, 245, 240, 0.4)";
                         e.target.style.boxShadow = "none";
-                        e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
+                        e.target.style.backgroundColor =
+                          "rgba(17, 94, 89, 0.6)";
                       }}
                       placeholder="Enter ZIP code"
                       value={formData.address.zipCode}
@@ -1941,28 +1980,49 @@ const Register = () => {
             </div>
 
             {/* Location Section */}
-            <div className="rounded-xl p-6 border" style={{ backgroundColor: "rgba(253, 224, 71, 0.05)", borderColor: "rgba(253, 224, 71, 0.2)", backdropFilter: "blur(10px)", }}>
-  <h3 className="text-xl font-bold mb-4 flex items-center gap-3" style={{ color: "#FDE047", fontFamily: "Playfair Display, serif", }}>
-    <MapPin className="w-6 h-6" />
-    Precise Location
-  </h3>
-  <p className="text-sm mb-6 leading-relaxed" style={{ color: "rgba(219, 245, 240, 0.8)", fontFamily: "Inter, sans-serif", }}>
-    📍 Select your pharmacy's exact location on the map. This helps patients find you easily and improves your visibility in local searches.
-  </p>
-</div>
+            <div
+              className="rounded-xl p-6 border"
+              style={{
+                backgroundColor: "rgba(253, 224, 71, 0.05)",
+                borderColor: "rgba(253, 224, 71, 0.2)",
+                backdropFilter: "blur(10px)",
+              }}
+            >
+              <h3
+                className="text-xl font-bold mb-4 flex items-center gap-3"
+                style={{
+                  color: "#FDE047",
+                  fontFamily: "Playfair Display, serif",
+                }}
+              >
+                <MapPin className="w-6 h-6" />
+                Precise Location
+              </h3>
+              <p
+                className="text-sm mb-6 leading-relaxed"
+                style={{
+                  color: "rgba(219, 245, 240, 0.8)",
+                  fontFamily: "Inter, sans-serif",
+                }}
+              >
+                📍 Select your pharmacy's exact location on the map. This helps
+                patients find you easily and improves your visibility in local
+                searches.
+              </p>
+            </div>
 
-{/* LocationPicker moved completely outside the container */}
-<LocationPicker 
-  onLocationSelect={handleLocationSelect}
-  initialLocation={
-    formData.location
-      ? {
-          lat: formData.location.coordinates[1],
-          lng: formData.location.coordinates[0],
-        }
-      : null
-  }
-/>
+            {/* LocationPicker moved completely outside the container */}
+            <LocationPicker
+              onLocationSelect={handleLocationSelect}
+              initialLocation={
+                formData.location
+                  ? {
+                      lat: formData.location.coordinates[1],
+                      lng: formData.location.coordinates[0],
+                    }
+                  : null
+              }
+            />
 
             {/* Pharmacy Details Section */}
             <div
@@ -2026,7 +2086,10 @@ const Register = () => {
                   >
                     <option
                       value=""
-                      style={{ backgroundColor: "rgba(17, 94, 89, 0.9)", color: "rgba(219, 245, 240, 0.8)" }}
+                      style={{
+                        backgroundColor: "rgba(17, 94, 89, 0.9)",
+                        color: "rgba(219, 245, 240, 0.8)",
+                      }}
                     >
                       Select pharmacy type
                     </option>
@@ -2034,7 +2097,10 @@ const Register = () => {
                       <option
                         key={type}
                         value={type}
-                        style={{ backgroundColor: "rgba(17, 94, 89, 0.9)", color: "#DBF5F0" }}
+                        style={{
+                          backgroundColor: "rgba(17, 94, 89, 0.9)",
+                          color: "#DBF5F0",
+                        }}
                       >
                         {type.replace(/_/g, " ").toUpperCase()}
                       </option>
@@ -2176,12 +2242,15 @@ const Register = () => {
                           e.target.style.borderColor = "#FDE047";
                           e.target.style.boxShadow =
                             "0 0 0 2px rgba(253, 224, 71, 0.1)";
-                          e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
+                          e.target.style.backgroundColor =
+                            "rgba(17, 94, 89, 0.8)";
                         }}
                         onBlur={(e) => {
-                          e.target.style.borderColor = "rgba(219, 245, 240, 0.4)";
+                          e.target.style.borderColor =
+                            "rgba(219, 245, 240, 0.4)";
                           e.target.style.boxShadow = "none";
-                          e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
+                          e.target.style.backgroundColor =
+                            "rgba(17, 94, 89, 0.6)";
                         }}
                         value={formData.operatingHours[day].open}
                         onChange={(e) => {
@@ -2218,12 +2287,15 @@ const Register = () => {
                           e.target.style.borderColor = "#FDE047";
                           e.target.style.boxShadow =
                             "0 0 0 2px rgba(253, 224, 71, 0.1)";
-                          e.target.style.backgroundColor = "rgba(17, 94, 89, 0.8)";
+                          e.target.style.backgroundColor =
+                            "rgba(17, 94, 89, 0.8)";
                         }}
                         onBlur={(e) => {
-                          e.target.style.borderColor = "rgba(219, 245, 240, 0.4)";
+                          e.target.style.borderColor =
+                            "rgba(219, 245, 240, 0.4)";
                           e.target.style.boxShadow = "none";
-                          e.target.style.backgroundColor = "rgba(17, 94, 89, 0.6)";
+                          e.target.style.backgroundColor =
+                            "rgba(17, 94, 89, 0.6)";
                         }}
                         value={formData.operatingHours[day].close}
                         onChange={(e) => {
@@ -2455,30 +2527,29 @@ const Register = () => {
           style={{ borderColor: "rgba(253, 224, 71, 0.2)" }}
         >
           <div className="flex gap-6">
-            
-<button
-  type="button"
-  onClick={() => setStep(1)}
-  className="absolute top-12 left-4 font-semibold py-3 px-5 rounded-xl transition-all duration-300 border-2 group hover:scale-105 z-10"
-  style={{
-    backgroundColor: "rgba(17, 94, 89, 0.2)",
-    color: "rgba(219, 245, 240, 0.8)",
-    borderColor: "rgba(219, 245, 240, 0.3)",
-    fontFamily: "Inter, sans-serif",
-  }}
-  onMouseEnter={(e) => {
-    e.target.style.backgroundColor = "rgba(17, 94, 89, 0.4)";
-    e.target.style.color = "#DBF5F0";
-    e.target.style.borderColor = "rgba(219, 245, 240, 0.5)";
-  }}
-  onMouseLeave={(e) => {
-    e.target.style.backgroundColor = "rgba(17, 94, 89, 0.2)";
-    e.target.style.color = "rgba(219, 245, 240, 0.8)";
-    e.target.style.borderColor = "rgba(219, 245, 240, 0.3)";
-  }}
->
-  ← Back to Role Selection
-</button>
+            <button
+              type="button"
+              onClick={() => setStep(1)}
+              className="absolute top-12 left-4 font-semibold py-3 px-5 rounded-xl transition-all duration-300 border-2 group hover:scale-105 z-10"
+              style={{
+                backgroundColor: "rgba(17, 94, 89, 0.2)",
+                color: "rgba(219, 245, 240, 0.8)",
+                borderColor: "rgba(219, 245, 240, 0.3)",
+                fontFamily: "Inter, sans-serif",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = "rgba(17, 94, 89, 0.4)";
+                e.target.style.color = "#DBF5F0";
+                e.target.style.borderColor = "rgba(219, 245, 240, 0.5)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = "rgba(17, 94, 89, 0.2)";
+                e.target.style.color = "rgba(219, 245, 240, 0.8)";
+                e.target.style.borderColor = "rgba(219, 245, 240, 0.3)";
+              }}
+            >
+              ← Back to Role Selection
+            </button>
 
             <button
               type="submit"

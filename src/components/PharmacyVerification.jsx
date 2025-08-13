@@ -57,7 +57,7 @@ const PharmacyVerification = () => {
     try {
       // Simple OTP verification - keeping same backend structure
       const response = await fetch(
-        "http://localhost:1111/api/v1/auth/verify-pharmacy",
+        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/verify-pharmacy",
         {
           method: "POST",
           headers: {
@@ -93,7 +93,7 @@ const PharmacyVerification = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:1111/api/v1/auth/resend-pharmacy-otp",
+        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/resend-pharmacy-otp",
         {
           method: "POST",
           headers: {

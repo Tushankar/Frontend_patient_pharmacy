@@ -43,7 +43,7 @@ const PharmacyEmailVerification = () => {
     try {
       // Try to send OTP to check if pharmacy is approved
       const response = await fetch(
-        "http://localhost:1111/api/v1/auth/resend-otp",
+        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/resend-otp",
         {
           method: "POST",
           headers: {
@@ -123,7 +123,7 @@ const PharmacyEmailVerification = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:1111/api/v1/auth/verify-email",
+        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/verify-email",
         {
           method: "POST",
           headers: {
@@ -160,7 +160,7 @@ const PharmacyEmailVerification = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:1111/api/v1/auth/resend-otp",
+        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/resend-otp",
         {
           method: "POST",
           headers: {

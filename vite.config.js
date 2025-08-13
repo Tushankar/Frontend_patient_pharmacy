@@ -7,8 +7,9 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:1111",
+        target: "https://doctors-portal-backend-2.onrender.com",
         changeOrigin: true,
+        secure: true,
         rewrite: (path) => path.replace(/^\/api/, "/api"),
       },
     },

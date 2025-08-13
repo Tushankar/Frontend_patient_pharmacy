@@ -41,9 +41,12 @@ export const AuthProvider = ({ children }) => {
   const checkAuth = async () => {
     console.log("checkAuth: sending /api/v1/auth/me request");
     try {
-      const response = await fetch("/api/v1/auth/me", {
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/me",
+        {
+          credentials: "include",
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         if (data.success) {
@@ -66,12 +69,15 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     console.log("login: sending credentials", { email, password });
     try {
-      const response = await fetch("/api/v1/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ email, password }),
+        }
+      );
       let data;
       try {
         data = await response.json();
@@ -101,14 +107,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (userData) => {
-    const response = await fetch("/api/v1/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(userData),
-    });
+    const response = await fetch(
+      "https://doctors-portal-backend-2.onrender.com/api/v1/auth/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(userData),
+      }
+    );
     const data = await response.json();
     if (response.ok && data.success) {
       setUser(data.user);
@@ -124,10 +133,13 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     console.log("logout: current user", user);
-    await fetch("/api/v1/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    });
+    await fetch(
+      "https://doctors-portal-backend-2.onrender.com/api/v1/auth/logout",
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
     setUser(null);
     localStorage.removeItem("user");
     localStorage.removeItem("token");
@@ -271,13 +283,16 @@ const Login = () => {
     setForgotPasswordLoading(true);
 
     try {
-      const response = await fetch("/api/v1/auth/forgot-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: forgotPasswordEmail }),
-      });
+      const response = await fetch(
+        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/forgot-password",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: forgotPasswordEmail }),
+        }
+      );
 
       const data = await response.json();
 
@@ -307,17 +322,20 @@ const Login = () => {
     setForgotPasswordLoading(true);
 
     try {
-      const response = await fetch("/api/v1/auth/reset-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: forgotPasswordEmail,
-          otp: resetPasswordData.otp,
-          newPassword: resetPasswordData.newPassword,
-        }),
-      });
+      const response = await fetch(
+        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/reset-password",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: forgotPasswordEmail,
+            otp: resetPasswordData.otp,
+            newPassword: resetPasswordData.newPassword,
+          }),
+        }
+      );
 
       const data = await response.json();
 

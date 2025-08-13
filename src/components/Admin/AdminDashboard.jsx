@@ -96,7 +96,7 @@ const AdminDashboard = () => {
         console.error("Error loading notifications on mount:", error);
       }
     };
-    
+
     loadNotifications();
   }, []); // Run only once on mount
 
@@ -105,7 +105,7 @@ const AdminDashboard = () => {
     try {
       if (activeTab === "overview") {
         const response = await fetch(
-          "http://localhost:1111/api/v1/admin/dashboard/stats",
+          "https://doctors-portal-backend-2.onrender.com/api/v1/admin/dashboard/stats",
           {
             credentials: "include",
           }
@@ -116,7 +116,7 @@ const AdminDashboard = () => {
         }
       } else if (activeTab === "approvals") {
         const response = await fetch(
-          "http://localhost:1111/api/v1/admin/pharmacy-approvals",
+          "https://doctors-portal-backend-2.onrender.com/api/v1/admin/pharmacy-approvals",
           {
             credentials: "include",
           }
@@ -127,7 +127,7 @@ const AdminDashboard = () => {
         }
       } else if (activeTab === "pharmacies") {
         const response = await fetch(
-          "http://localhost:1111/api/v1/admin/pharmacies",
+          "https://doctors-portal-backend-2.onrender.com/api/v1/admin/pharmacies",
           {
             credentials: "include",
           }
@@ -138,7 +138,7 @@ const AdminDashboard = () => {
         }
       } else if (activeTab === "patients") {
         const response = await fetch(
-          "http://localhost:1111/api/v1/admin/patients",
+          "https://doctors-portal-backend-2.onrender.com/api/v1/admin/patients",
           {
             credentials: "include",
           }
@@ -149,7 +149,7 @@ const AdminDashboard = () => {
         }
       } else if (activeTab === "admins") {
         const response = await fetch(
-          "http://localhost:1111/api/v1/admin/admins",
+          "https://doctors-portal-backend-2.onrender.com/api/v1/admin/admins",
           {
             credentials: "include",
           }
@@ -186,7 +186,7 @@ const AdminDashboard = () => {
     setActionLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:1111/api/v1/admin/pharmacy-approvals/${selectedApproval._id}/${action}`,
+        `https://doctors-portal-backend-2.onrender.com/api/v1/admin/pharmacy-approvals/${selectedApproval._id}/${action}`,
         {
           method: "PUT",
           headers: {
@@ -219,7 +219,7 @@ const AdminDashboard = () => {
   const handleToggleUserStatus = async (userId) => {
     try {
       console.log("🔍 handleToggleUserStatus called with ID:", userId);
-      const url = `http://localhost:1111/api/v1/admin/users/${userId}/toggle-status`;
+      const url = `https://doctors-portal-backend-2.onrender.com/api/v1/admin/users/${userId}/toggle-status`;
       console.log("🔍 Making request to:", url);
 
       const response = await fetch(url, {
@@ -258,7 +258,7 @@ const AdminDashboard = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:1111/api/v1/admin/patients/${patientId}`,
+        `https://doctors-portal-backend-2.onrender.com/api/v1/admin/patients/${patientId}`,
         {
           method: "GET",
           headers: {
@@ -290,10 +290,13 @@ const AdminDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:1111/api/v1/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
+      await fetch(
+        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/logout",
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
       window.location.href = "/login";
     } catch (error) {
       console.error("Logout error:", error);
@@ -321,77 +324,95 @@ const AdminDashboard = () => {
   const handleMarkAsRead = async (notificationId) => {
     try {
       console.log("Attempting to mark notification as read:", notificationId);
-      
+
       // Immediately update the UI state for better UX
       setAllNotifications((prev) =>
         prev.map((notif) =>
-          notif._id === notificationId 
-            ? { 
-                ...notif, 
+          notif._id === notificationId
+            ? {
+                ...notif,
                 read: true,
                 userStatus: {
                   ...notif.userStatus,
                   deliveryStatus: "read",
-                  readAt: new Date().toISOString()
+                  readAt: new Date().toISOString(),
                 },
-                adminView: notif.adminView ? {
-                  ...notif.adminView,
-                  readCount: (notif.adminView.readCount || 0) + 1,
-                  unreadCount: Math.max(0, (notif.adminView.unreadCount || 1) - 1)
-                } : notif.adminView
-              } 
+                adminView: notif.adminView
+                  ? {
+                      ...notif.adminView,
+                      readCount: (notif.adminView.readCount || 0) + 1,
+                      unreadCount: Math.max(
+                        0,
+                        (notif.adminView.unreadCount || 1) - 1
+                      ),
+                    }
+                  : notif.adminView,
+              }
             : notif
         )
       );
-      
+
       // Call the backend API
       const success = await markAsRead(notificationId);
-      
+
       if (success) {
-        console.log("Successfully marked notification as read:", notificationId);
+        console.log(
+          "Successfully marked notification as read:",
+          notificationId
+        );
       } else {
         console.error("Failed to mark notification as read, reverting state");
         // Revert the state change if the API call failed
         setAllNotifications((prev) =>
           prev.map((notif) =>
-            notif._id === notificationId 
-              ? { 
-                  ...notif, 
+            notif._id === notificationId
+              ? {
+                  ...notif,
                   read: false,
                   userStatus: {
                     ...notif.userStatus,
-                    deliveryStatus: "delivered"
+                    deliveryStatus: "delivered",
                   },
-                  adminView: notif.adminView ? {
-                    ...notif.adminView,
-                    readCount: Math.max(0, (notif.adminView.readCount || 1) - 1),
-                    unreadCount: (notif.adminView.unreadCount || 0) + 1
-                  } : notif.adminView
-                } 
+                  adminView: notif.adminView
+                    ? {
+                        ...notif.adminView,
+                        readCount: Math.max(
+                          0,
+                          (notif.adminView.readCount || 1) - 1
+                        ),
+                        unreadCount: (notif.adminView.unreadCount || 0) + 1,
+                      }
+                    : notif.adminView,
+                }
               : notif
           )
         );
       }
     } catch (error) {
       console.error("Error marking notification as read:", error);
-      
+
       // Revert the state change if there was an error
       setAllNotifications((prev) =>
         prev.map((notif) =>
-          notif._id === notificationId 
-            ? { 
-                ...notif, 
+          notif._id === notificationId
+            ? {
+                ...notif,
                 read: false,
                 userStatus: {
                   ...notif.userStatus,
-                  deliveryStatus: "delivered"
+                  deliveryStatus: "delivered",
                 },
-                adminView: notif.adminView ? {
-                  ...notif.adminView,
-                  readCount: Math.max(0, (notif.adminView.readCount || 1) - 1),
-                  unreadCount: (notif.adminView.unreadCount || 0) + 1
-                } : notif.adminView
-              } 
+                adminView: notif.adminView
+                  ? {
+                      ...notif.adminView,
+                      readCount: Math.max(
+                        0,
+                        (notif.adminView.readCount || 1) - 1
+                      ),
+                      unreadCount: (notif.adminView.unreadCount || 0) + 1,
+                    }
+                  : notif.adminView,
+              }
             : notif
         )
       );
@@ -1169,9 +1190,7 @@ const AdminDashboard = () => {
         />
 
         {/* Content */}
-        <div className="p-4 lg:p-6">
-          {renderContent()}
-        </div>
+        <div className="p-4 lg:p-6">{renderContent()}</div>
       </div>
 
       {/* Modals */}

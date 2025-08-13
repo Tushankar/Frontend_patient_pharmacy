@@ -12,13 +12,16 @@ const DebugUnreadMessages = () => {
       }
 
       // Test the endpoint directly
-      const response = await fetch("/api/v1/chat/unread-counts", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "https://doctors-portal-backend-2.onrender.com/api/v1/chat/unread-counts",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       console.log("Response status:", response.status);
       console.log("Response ok:", response.ok);

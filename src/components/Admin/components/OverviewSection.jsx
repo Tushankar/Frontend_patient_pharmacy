@@ -31,7 +31,7 @@ const OverviewSection = ({
     pendingApprovals: 23,
     activeUsers: 892,
     verifiedEmails: 1156,
-    recentRegistrations: 47
+    recentRegistrations: 47,
   };
 
   // Demo data for recent patients
@@ -43,7 +43,7 @@ const OverviewSection = ({
       email: "john.doe@email.com",
       phone: "+1 (555) 123-4567",
       createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
-      isActive: true
+      isActive: true,
     },
     {
       _id: "2",
@@ -52,7 +52,7 @@ const OverviewSection = ({
       email: "sarah.johnson@email.com",
       phone: "+1 (555) 987-6543",
       createdAt: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString(),
-      isActive: true
+      isActive: true,
     },
     {
       _id: "3",
@@ -61,8 +61,8 @@ const OverviewSection = ({
       email: "michael.brown@email.com",
       phone: "+1 (555) 456-7890",
       createdAt: new Date(Date.now() - 1000 * 60 * 60 * 8).toISOString(),
-      isActive: false
-    }
+      isActive: false,
+    },
   ];
 
   // Demo data for recent pharmacies
@@ -72,22 +72,22 @@ const OverviewSection = ({
       pharmacyName: "HealthPlus Pharmacy",
       address: { city: "New York", state: "NY" },
       createdAt: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(),
-      isActive: true
+      isActive: true,
     },
     {
       _id: "2",
       pharmacyName: "MediCare Central",
       address: { city: "Los Angeles", state: "CA" },
       createdAt: new Date(Date.now() - 1000 * 60 * 60 * 12).toISOString(),
-      isActive: true
+      isActive: true,
     },
     {
       _id: "3",
       pharmacyName: "Wellness Pharmacy",
       address: { city: "Chicago", state: "IL" },
       createdAt: new Date(Date.now() - 1000 * 60 * 60 * 18).toISOString(),
-      isActive: false
-    }
+      isActive: false,
+    },
   ];
 
   // Fetch recent patients and pharmacies
@@ -106,13 +106,13 @@ const OverviewSection = ({
     try {
       const [patientsResponse, pharmaciesResponse] = await Promise.all([
         fetch(
-          "http://localhost:1111/api/v1/admin/patients?limit=5&sort=createdAt",
+          "https://doctors-portal-backend-2.onrender.com/api/v1/admin/patients?limit=5&sort=createdAt",
           {
             credentials: "include",
           }
         ),
         fetch(
-          "http://localhost:1111/api/v1/admin/pharmacies?limit=5&sort=createdAt",
+          "https://doctors-portal-backend-2.onrender.com/api/v1/admin/pharmacies?limit=5&sort=createdAt",
           {
             credentials: "include",
           }
@@ -142,8 +142,10 @@ const OverviewSection = ({
   };
 
   const displayStats = stats || demoStats;
-  const displayPatients = recentPatients.length > 0 ? recentPatients : demoRecentPatients;
-  const displayPharmacies = recentPharmacies.length > 0 ? recentPharmacies : demoRecentPharmacies;
+  const displayPatients =
+    recentPatients.length > 0 ? recentPatients : demoRecentPatients;
+  const displayPharmacies =
+    recentPharmacies.length > 0 ? recentPharmacies : demoRecentPharmacies;
 
   if (loading) {
     return (
@@ -230,19 +232,28 @@ const OverviewSection = ({
                 {displayStats.totalPatients}
               </p>
               <div className="flex items-center gap-1">
-                <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: "rgba(34, 197, 94, 0.2)", color: "#22C55E" }}>
+                <span
+                  className="text-xs px-2 py-1 rounded-full"
+                  style={{
+                    backgroundColor: "rgba(34, 197, 94, 0.2)",
+                    color: "#22C55E",
+                  }}
+                >
                   ↗ 12.5%
                 </span>
-                <span className="text-xs" style={{ color: "#A7F3D0", opacity: 0.7 }}>
+                <span
+                  className="text-xs"
+                  style={{ color: "#A7F3D0", opacity: 0.7 }}
+                >
                   vs last month
                 </span>
               </div>
             </div>
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ 
+              style={{
                 background: "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
-                boxShadow: "0 4px 12px rgba(59, 130, 246, 0.3)"
+                boxShadow: "0 4px 12px rgba(59, 130, 246, 0.3)",
               }}
             >
               <Users className="w-6 h-6" style={{ color: "#FFFFFF" }} />
@@ -273,19 +284,28 @@ const OverviewSection = ({
                 {displayStats.totalPharmacies}
               </p>
               <div className="flex items-center gap-1">
-                <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: "rgba(34, 197, 94, 0.2)", color: "#22C55E" }}>
+                <span
+                  className="text-xs px-2 py-1 rounded-full"
+                  style={{
+                    backgroundColor: "rgba(34, 197, 94, 0.2)",
+                    color: "#22C55E",
+                  }}
+                >
                   ↗ 8.2%
                 </span>
-                <span className="text-xs" style={{ color: "#A7F3D0", opacity: 0.7 }}>
+                <span
+                  className="text-xs"
+                  style={{ color: "#A7F3D0", opacity: 0.7 }}
+                >
                   new registrations
                 </span>
               </div>
             </div>
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ 
+              style={{
                 background: "linear-gradient(135deg, #10B981 0%, #047857 100%)",
-                boxShadow: "0 4px 12px rgba(16, 185, 129, 0.3)"
+                boxShadow: "0 4px 12px rgba(16, 185, 129, 0.3)",
               }}
             >
               <Building className="w-6 h-6" style={{ color: "#FFFFFF" }} />
@@ -316,19 +336,28 @@ const OverviewSection = ({
                 {displayStats.pendingApprovals}
               </p>
               <div className="flex items-center gap-1">
-                <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: "rgba(251, 191, 36, 0.2)", color: "#F59E0B" }}>
+                <span
+                  className="text-xs px-2 py-1 rounded-full"
+                  style={{
+                    backgroundColor: "rgba(251, 191, 36, 0.2)",
+                    color: "#F59E0B",
+                  }}
+                >
                   ⚠ Urgent
                 </span>
-                <span className="text-xs" style={{ color: "#A7F3D0", opacity: 0.7 }}>
+                <span
+                  className="text-xs"
+                  style={{ color: "#A7F3D0", opacity: 0.7 }}
+                >
                   requires action
                 </span>
               </div>
             </div>
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ 
+              style={{
                 background: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)",
-                boxShadow: "0 4px 12px rgba(245, 158, 11, 0.3)"
+                boxShadow: "0 4px 12px rgba(245, 158, 11, 0.3)",
               }}
             >
               <Clock className="w-6 h-6" style={{ color: "#FFFFFF" }} />
@@ -359,19 +388,28 @@ const OverviewSection = ({
                 {displayStats.activeUsers}
               </p>
               <div className="flex items-center gap-1">
-                <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: "rgba(34, 197, 94, 0.2)", color: "#22C55E" }}>
+                <span
+                  className="text-xs px-2 py-1 rounded-full"
+                  style={{
+                    backgroundColor: "rgba(34, 197, 94, 0.2)",
+                    color: "#22C55E",
+                  }}
+                >
                   ✓ Online
                 </span>
-                <span className="text-xs" style={{ color: "#A7F3D0", opacity: 0.7 }}>
+                <span
+                  className="text-xs"
+                  style={{ color: "#A7F3D0", opacity: 0.7 }}
+                >
                   last 24h
                 </span>
               </div>
             </div>
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ 
+              style={{
                 background: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)",
-                boxShadow: "0 4px 12px rgba(139, 92, 246, 0.3)"
+                boxShadow: "0 4px 12px rgba(139, 92, 246, 0.3)",
               }}
             >
               <Activity className="w-6 h-6" style={{ color: "#FFFFFF" }} />
@@ -402,19 +440,28 @@ const OverviewSection = ({
                 {displayStats.verifiedEmails}
               </p>
               <div className="flex items-center gap-1">
-                <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: "rgba(34, 197, 94, 0.2)", color: "#22C55E" }}>
+                <span
+                  className="text-xs px-2 py-1 rounded-full"
+                  style={{
+                    backgroundColor: "rgba(34, 197, 94, 0.2)",
+                    color: "#22C55E",
+                  }}
+                >
                   ✉ 96.8%
                 </span>
-                <span className="text-xs" style={{ color: "#A7F3D0", opacity: 0.7 }}>
+                <span
+                  className="text-xs"
+                  style={{ color: "#A7F3D0", opacity: 0.7 }}
+                >
                   verification rate
                 </span>
               </div>
             </div>
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ 
+              style={{
                 background: "linear-gradient(135deg, #06B6D4 0%, #0891B2 100%)",
-                boxShadow: "0 4px 12px rgba(6, 182, 212, 0.3)"
+                boxShadow: "0 4px 12px rgba(6, 182, 212, 0.3)",
               }}
             >
               <Mail className="w-6 h-6" style={{ color: "#FFFFFF" }} />
@@ -445,19 +492,28 @@ const OverviewSection = ({
                 {displayStats.recentRegistrations}
               </p>
               <div className="flex items-center gap-1">
-                <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: "rgba(34, 197, 94, 0.2)", color: "#22C55E" }}>
+                <span
+                  className="text-xs px-2 py-1 rounded-full"
+                  style={{
+                    backgroundColor: "rgba(34, 197, 94, 0.2)",
+                    color: "#22C55E",
+                  }}
+                >
                   ↗ +15%
                 </span>
-                <span className="text-xs" style={{ color: "#A7F3D0", opacity: 0.7 }}>
+                <span
+                  className="text-xs"
+                  style={{ color: "#A7F3D0", opacity: 0.7 }}
+                >
                   last 7 days
                 </span>
               </div>
             </div>
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ 
+              style={{
                 background: "linear-gradient(135deg, #EF4444 0%, #DC2626 100%)",
-                boxShadow: "0 4px 12px rgba(239, 68, 68, 0.3)"
+                boxShadow: "0 4px 12px rgba(239, 68, 68, 0.3)",
               }}
             >
               <TrendingUp className="w-6 h-6" style={{ color: "#FFFFFF" }} />
@@ -475,7 +531,8 @@ const OverviewSection = ({
             backgroundColor: "#256C5C",
             border: "1px solid rgba(253, 224, 71, 0.3)",
             backdropFilter: "blur(10px)",
-            boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.2)",
+            boxShadow:
+              "inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.2)",
           }}
         >
           <div className="flex items-center justify-between mb-4">
@@ -525,7 +582,8 @@ const OverviewSection = ({
                       <div
                         className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
                         style={{
-                          background: "linear-gradient(135deg, #FDE047 0%, #FACC15 100%)",
+                          background:
+                            "linear-gradient(135deg, #FDE047 0%, #FACC15 100%)",
                           color: "#115E59",
                         }}
                       >
@@ -540,8 +598,8 @@ const OverviewSection = ({
                         >
                           {patient.firstName} {patient.lastName}
                         </p>
-                        <p 
-                          className="text-xs truncate" 
+                        <p
+                          className="text-xs truncate"
                           style={{ color: "#000000", opacity: 0.7 }}
                         >
                           {patient.email}
@@ -591,7 +649,8 @@ const OverviewSection = ({
             backgroundColor: "#256C5C",
             border: "1px solid rgba(253, 224, 71, 0.3)",
             backdropFilter: "blur(10px)",
-            boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.2)",
+            boxShadow:
+              "inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.2)",
           }}
         >
           <div className="flex items-center justify-between mb-4">
@@ -641,7 +700,8 @@ const OverviewSection = ({
                       <div
                         className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
                         style={{
-                          background: "linear-gradient(135deg, #22C55E 0%, #16A34A 100%)",
+                          background:
+                            "linear-gradient(135deg, #22C55E 0%, #16A34A 100%)",
                           color: "#FFFFFF",
                         }}
                       >
@@ -659,7 +719,9 @@ const OverviewSection = ({
                           style={{ color: "#000000", opacity: 0.7 }}
                         >
                           <MapPin className="w-3 h-3 flex-shrink-0" />
-                          <span>{pharmacy.address?.city || "Location not provided"}</span>
+                          <span>
+                            {pharmacy.address?.city || "Location not provided"}
+                          </span>
                         </p>
                       </div>
                     </div>
