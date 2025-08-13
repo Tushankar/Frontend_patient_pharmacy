@@ -25,6 +25,7 @@ import {
 import NotificationCreator from "../Notifications/NotificationCreator";
 import { useAdvancedNotifications } from "../../hooks/useAdvancedNotifications";
 import { useNotifications } from "../../hooks/useNotifications";
+import axiosInstance from "../../utils/axiosInstance";
 
 // Import all the new components
 import AdminSidebar from "./components/AdminSidebar";
@@ -104,59 +105,34 @@ const AdminDashboard = () => {
     setLoading(true);
     try {
       if (activeTab === "overview") {
-        const response = await fetch(
-          "https://doctors-portal-backend-2.onrender.com/api/v1/admin/dashboard/stats",
-          {
-            credentials: "include",
-          }
-        );
-        const data = await response.json();
-        if (data.success) {
-          setStats(data.data);
+        const response = await axiosInstance.get("/admin/dashboard/stats");
+        if (response.data.success) {
+          setStats(response.data.data);
         }
       } else if (activeTab === "approvals") {
-        const response = await fetch(
-          "https://doctors-portal-backend-2.onrender.com/api/v1/admin/pharmacy-approvals",
-          {
-            credentials: "include",
-          }
-        );
-        const data = await response.json();
-        if (data.success) {
-          setPendingApprovals(data.data);
+        console.log("🔍 Fetching pharmacy approvals...");
+        const response = await axiosInstance.get("/admin/pharmacy-approvals");
+        console.log("📋 Approvals response:", response.data);
+        if (response.data.success) {
+          setPendingApprovals(response.data.data);
+          console.log("✅ Set pending approvals:", response.data.data.length, "items");
+        } else {
+          console.error("❌ Failed to fetch approvals:", response.data.message);
         }
       } else if (activeTab === "pharmacies") {
-        const response = await fetch(
-          "https://doctors-portal-backend-2.onrender.com/api/v1/admin/pharmacies",
-          {
-            credentials: "include",
-          }
-        );
-        const data = await response.json();
-        if (data.success) {
-          setPharmacies(data.data);
+        const response = await axiosInstance.get("/admin/pharmacies");
+        if (response.data.success) {
+          setPharmacies(response.data.data);
         }
       } else if (activeTab === "patients") {
-        const response = await fetch(
-          "https://doctors-portal-backend-2.onrender.com/api/v1/admin/patients",
-          {
-            credentials: "include",
-          }
-        );
-        const data = await response.json();
-        if (data.success) {
-          setPatients(data.data);
+        const response = await axiosInstance.get("/admin/patients");
+        if (response.data.success) {
+          setPatients(response.data.data);
         }
       } else if (activeTab === "admins") {
-        const response = await fetch(
-          "https://doctors-portal-backend-2.onrender.com/api/v1/admin/admins",
-          {
-            credentials: "include",
-          }
-        );
-        const data = await response.json();
-        if (data.success) {
-          setAdmins(data.data);
+        const response = await axiosInstance.get("/admin/admins");
+        if (response.data.success) {
+          setAdmins(response.data.data);
         }
       } else if (activeTab === "notifications") {
         try {
@@ -185,28 +161,20 @@ const AdminDashboard = () => {
 
     setActionLoading(true);
     try {
-      const response = await fetch(
-        `https://doctors-portal-backend-2.onrender.com/api/v1/admin/pharmacy-approvals/${selectedApproval._id}/${action}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({ remarks }),
-        }
+      const response = await axiosInstance.put(
+        `/admin/pharmacy-approvals/${selectedApproval._id}/${action}`,
+        { remarks }
       );
       console.log("🔍 Approval action response:", response);
 
-      const data = await response.json();
-      if (data.success) {
+      if (response.data.success) {
         alert(`Pharmacy ${action}ed successfully!`);
         setSelectedApproval(null);
         setApprovalAction(null);
         setRemarks("");
         fetchDashboardData();
       } else {
-        alert(data.message || `Failed to ${action} pharmacy`);
+        alert(response.data.message || `Failed to ${action} pharmacy`);
       }
     } catch (error) {
       console.error(`Error ${action}ing pharmacy:`, error);
@@ -219,34 +187,19 @@ const AdminDashboard = () => {
   const handleToggleUserStatus = async (userId) => {
     try {
       console.log("🔍 handleToggleUserStatus called with ID:", userId);
-      const url = `https://doctors-portal-backend-2.onrender.com/api/v1/admin/users/${userId}/toggle-status`;
-      console.log("🔍 Making request to:", url);
-
-      const response = await fetch(url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await axiosInstance.put(`/admin/users/${userId}/toggle-status`);
+      console.log("🔍 Making request to toggle user status");
 
       console.log("🔍 Response status:", response.status);
-      console.log("🔍 Response ok:", response.ok);
+      console.log("🔍 Response ok:", response.status < 400);
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("❌ HTTP Error:", response.status, errorText);
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
+      console.log("✅ Response data:", response.data);
 
-      const data = await response.json();
-      console.log("✅ Response data:", data);
-
-      if (data.success) {
-        alert(data.message);
+      if (response.data.success) {
+        alert(response.data.message);
         fetchDashboardData();
       } else {
-        alert(data.message || "Failed to update user status");
+        alert(response.data.message || "Failed to update user status");
       }
     } catch (error) {
       console.error("❌ Error toggling user status:", error);
@@ -257,28 +210,12 @@ const AdminDashboard = () => {
   const handleViewPatientDetails = async (patientId) => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `https://doctors-portal-backend-2.onrender.com/api/v1/admin/patients/${patientId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      const response = await axiosInstance.get(`/admin/patients/${patientId}`);
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("HTTP Error:", response.status, errorText);
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      if (data.success) {
-        setSelectedPatient(data.data);
+      if (response.data.success) {
+        setSelectedPatient(response.data.data);
       } else {
-        alert(data.message || "Failed to fetch patient details");
+        alert(response.data.message || "Failed to fetch patient details");
       }
     } catch (error) {
       console.error("Error fetching patient details:", error);
@@ -290,13 +227,7 @@ const AdminDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch(
-        "https://doctors-portal-backend-2.onrender.com/api/v1/auth/logout",
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
+      await axiosInstance.post("/auth/logout");
       window.location.href = "/login";
     } catch (error) {
       console.error("Logout error:", error);
