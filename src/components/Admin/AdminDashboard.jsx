@@ -115,7 +115,11 @@ const AdminDashboard = () => {
         console.log("📋 Approvals response:", response.data);
         if (response.data.success) {
           setPendingApprovals(response.data.data);
-          console.log("✅ Set pending approvals:", response.data.data.length, "items");
+          console.log(
+            "✅ Set pending approvals:",
+            response.data.data.length,
+            "items"
+          );
         } else {
           console.error("❌ Failed to fetch approvals:", response.data.message);
         }
@@ -187,7 +191,9 @@ const AdminDashboard = () => {
   const handleToggleUserStatus = async (userId) => {
     try {
       console.log("🔍 handleToggleUserStatus called with ID:", userId);
-      const response = await axiosInstance.put(`/admin/users/${userId}/toggle-status`);
+      const response = await axiosInstance.put(
+        `/admin/users/${userId}/toggle-status`
+      );
       console.log("🔍 Making request to toggle user status");
 
       console.log("🔍 Response status:", response.status);
